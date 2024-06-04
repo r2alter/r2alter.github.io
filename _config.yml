@@ -9,6 +9,10 @@ name: Marcin Winiarek
 url: https://r2alter.github.io
 
 
+
+
+# Author sidebar
+author_profile: true
 author:
   name     : "r2alter"
   avatar   : "/assets/images/r2-logo.jpg"
