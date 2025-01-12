@@ -52,3 +52,9 @@ Script performs DNS resolving during format input stage. If the hostname has mor
 
 Possibility to track live results and also have results saved in variable.
 ![live results feature](/assets/images/live_results_feature.png)
+
+## Conclusions
+
+After two years I decided to share this script because I realized it works fine. LOL. I hope it will help someone at hacking activities. Enjoy.
+
+Github link: https://github.com/r2alter/PowerNetScan/tree/main
