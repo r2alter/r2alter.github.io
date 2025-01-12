@@ -1,1 +1,51 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-06-04T11:17:53+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">r2alter blog</title><subtitle>Cybersecurity related tools</subtitle><author><name>r2alter</name></author></feed>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2025-01-12T18:07:46+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">r2alter blog</title><subtitle>Cybersecurity related tools</subtitle><author><name>r2alter</name></author><entry><title type="html">PowerNetScan</title><link href="http://localhost:4000/PowerNetScan/" rel="alternate" type="text/html" title="PowerNetScan" /><published>2025-01-12T00:00:00+01:00</published><updated>2025-01-12T00:00:00+01:00</updated><id>http://localhost:4000/PowerNetScan</id><content type="html" xml:base="http://localhost:4000/PowerNetScan/"><![CDATA[<h2 id="introduction">Introduction</h2>
+
+<p>There are so many TCP scanners available on the web. So why did I write another one? During Red Teaming operations or certification exams like OSEP or OSED I made a lot of network scans. Of course, the first choice is Nmap. The king is only one.</p>
+
+<p>But when I am inside Active Directory Domain and I want to scan inside the network, I have two options: tunneling or using Windows tools. Tunneling network traffic for scanning is not reliable enough (my private opinion only).</p>
+
+<p>So I have to use some Windows tools. To install additional software, it is required to gain Administrator privileges. Using portable Nmap is often marked as malicious behavior. The last chance to do it easily is to use PowerShell.</p>
+
+<p>There are so many open-source PowerShell port scanners. But anyone meet my requirements. Different command syntax (reminder - Nmap is the king), slow scanning, and truncated output are the usual problems. </p>
+
+<p>So… I had to create my own port scanner, which works well for me.</p>
+
+<h2 id="usage">Usage</h2>
+<p>Adding the command to a PowerShell session is so simple.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/r2alter/PowerNetScan/main/PowerNetScan.ps1') | IEX
+</code></pre></div></div>
+
+<p>And just execute <strong>Invoke-TCPPortScan</strong> command. Targets can be defined using parameters <em>Hosts</em> <strong>OR</strong> <em>HostsFile</em>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Invoke-TCPPortScan -Hosts google.com
+</code></pre></div></div>
+
+<p>I wanted to create similar command syntax to Nmap basic invoking. So you can use the following parameters:</p>
+<ul>
+  <li>Hosts (Object) - provide IP addresses, IP address ranges (like Nmap) and hostnames separate it by comma. If used <strong>FileHosts</strong> parameters cannot be used.
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Invoke-TCPPortScan -Hosts google.com,172.16.209.128-130,172.16.10.2
+</code></pre></div>    </div>
+  </li>
+  <li>HostsFile (Object) - provide a path to the file where targets are written line by line. If used <strong>Hosts</strong> parameters cannot be used.</li>
+  <li>Ports (Object) - like always, TCP ports to scan, also ranges, and single ports separated by commas. If not provided, the top 250 ports from Nmap will be scanned.
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Invoke-TCPPortScan -Hosts google.com -Ports 80,82,441-446
+</code></pre></div>    </div>
+  </li>
+  <li>Timeout (float) - How many seconds wait for a response from each port.</li>
+  <li>Threads (int) - How many threads will be used for scanning. Nice to improving performance.</li>
+  <li>ShowScope (switch) - If you want to see the whole scanning scope after input formatting and resolving DNS. Useless without <strong>Verbose</strong> switch.</li>
+  <li>ConsoleOutput (switch) - everything is written to the console. Default output type.</li>
+  <li>ObjectOutput (switch) - If choosen results of the scan are returned as object.</li>
+  <li>FileOutput (String) - Save results of scan to file.</li>
+</ul>
+
+<p>and common parameters. Important is the <strong>Verbose</strong> parameter which shows what is happening in background and allows checking live results.</p>
+
+<h2 id="valuable-features">Valuable features</h2>
+
+<p>Script performs DNS resolving during format input stage. If the hostname has more than one IP address, all addresses will be added to scope.
+<img src="/assets/images/DNS_feature.png" alt="DNS feature" /></p>
+
+<p>Possibility to track live results and also have results saved in variable.
+<img src="/assets/images/live_results_feature.png" alt="live results feature" /></p>]]></content><author><name>r2alter</name></author><summary type="html"><![CDATA[Introduction]]></summary></entry></feed>
